@@ -18,11 +18,10 @@ python3 dynamic_grasping.py --hand_joint L10 --hand_type left --speed 20 50 50 5
 '''
 
 def main(args):
-
     # 初始化API
     hand = LinkerHandApi(hand_joint=args.hand_joint,hand_type=args.hand_type)
     # 设置速度
-    hand.set_speed(speed=[20,50,50,50,50])
+    hand.set_speed(speed=args.speed)
     # 准备抓握姿态
     pose = [255, 70, 255, 255, 255, 255, 255, 255, 255, 120]
     hand.finger_move(pose=pose)
