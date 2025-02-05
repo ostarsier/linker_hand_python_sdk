@@ -7,7 +7,7 @@ import argparse
 from LinkerHand.linker_hand_api import LinkerHandApi
 
 '''
-动态抓取示例，通过动态设置抓取坐标，实现抓取不同直径大小的物品
+动态抓取示例，通过动态设置抓取物品直径参数，实现抓取不同直径大小的物品
 命令行参数：
 --hand_joint: 手指关节类型(L10或L25)
 --hand_type: 左手还是右手(left或right)
