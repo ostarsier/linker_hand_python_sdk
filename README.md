@@ -46,9 +46,9 @@ LinkerHand Python SDK
 - #### [0005-linker_hand_opposition](example/L10/gesture/linker_hand_opposition.py)
 - #### [0006-linker_hand_sway](example/L10/gesture/linker_hand_sway.py)
 
-- #### [0006-linker_hand_get_force](example/L10/get_status/get_force.py)
-- #### [0006-linker_hand_get_speed](example/L10/get_status/get_speed.py)
-- #### [0006-linker_hand_get_state](example/L10/get_status/get_state.py)
+- #### [0007-linker_hand_get_force](example/L10/get_status/get_force.py)
+- #### [0008-linker_hand_get_speed](example/L10/get_status/get_speed.py)
+- #### [0009-linker_hand_get_state](example/L10/get_status/get_state.py)
 
 
 
