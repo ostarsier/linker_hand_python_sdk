@@ -50,6 +50,8 @@ LinkerHand Python SDK
 - #### [0008-linker_hand_get_speed](example/L10/get_status/get_speed.py)
 - #### [0009-linker_hand_get_state](example/L10/get_status/get_state.py)
 
+- #### [0010-linker_hand_dynamic_grasping](example/L10/grab/dynamic_grasping.py)
+
 
 
 

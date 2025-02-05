@@ -6,11 +6,21 @@ sys.path.append(target_dir)
 import argparse
 from LinkerHand.linker_hand_api import LinkerHandApi
 
-
+'''
+动态抓取示例，通过动态设置抓取坐标，实现抓取不同位置物品
+命令行参数：
+--hand_joint: 手指关节类型(L10或L25)
+--hand_type: 左手还是右手(left或right)
+--speed: 速度设置(0~255)
+--mm: 抓取物品距离(mm)
+示例：
+python3 dynamic_grasping.py --hand_joint L10 --hand_type left --speed 20 50 50 50 50 --mm 30
+'''
 
 def main(args):
+
     # 初始化API
-    hand = LinkerHandApi(hand_joint="L10",hand_type="left")
+    hand = LinkerHandApi(hand_joint=args.hand_joint,hand_type=args.hand_type)
     # 设置速度
     hand.set_speed(speed=[20,50,50,50,50])
     # 准备抓握姿态
@@ -39,9 +49,9 @@ def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Dynamic Grasping Script")
-    parser.add_argument("--hand_joint", type=str, default="L10", help="Hand joint type")
-    parser.add_argument("--hand_type", type=str, default="left", help="Hand type")
-    parser.add_argument("--speed", type=int, nargs='+', default=[20, 50, 50, 50, 50], help="Speed settings")
+    parser.add_argument("--hand_joint", type=str, default="L10", help="Hand joint type (L10 or L25)")
+    parser.add_argument("--hand_type", type=str, default="left", help="Hand type (left or right)")
+    parser.add_argument("--speed", type=int, nargs='+', default=[20, 50, 50, 50, 50], help="Speed settings (0~255)")
     parser.add_argument("--mm", type=int, default="30", help="Distance in mm")
     args = parser.parse_args()
     main(args)
