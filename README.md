@@ -62,11 +62,6 @@ LinkerHand Python SDK
   hand = LinkerHandApi(hand_joint="L10",hand_type="right")
   ```
 
-- #### Connect/Disconnect
-  ```python
-  arm.connect(...)
-  arm.disconnect()
-  ```
 
 - #### Move
   ```python
