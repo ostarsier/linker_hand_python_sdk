@@ -4,12 +4,12 @@
 LinkerHand Python SDK
 
 ## Caution
-- Ensure no other control methods are active for the dexterous hand (e.g., `linker_hand_sdk_ros`, motion capture glove control, or other ROS topics). Conflicts may occur.。
-- Securely mount the dexterous hand to prevent falls during operation.
-- Verify proper power supply and USB-to-CAN connection for the dexterous hand.
+- 请确保灵巧手未开启其他控制，如linker_hand_sdk_ros、动捕手套控制和其他控制灵巧手的topic。以免冲突。
+- 请将固定灵巧手，以免灵巧手在运动时跌落。
+- 请确保灵巧手电源与USB转CAN连接正确。
 
 ## Installation
-&ensp;&ensp;Run the examples after installing dependencies (Python 3 only)
+&ensp;&ensp;您可以在安装requirements.txt后的情况下运行示例。仅支持 Python3。
 - download
 
   ```bash
@@ -22,21 +22,21 @@ LinkerHand Python SDK
   pip3 install -r requirements.txt
   ```
 
-## Documentation
+## 相关文档
 
 
-## Version Information
+## 更新说明
 - > ### 1.1.2
-  - Compatible with L10 Dexterous Hand Models 
-  - Supports GUI-Based Control for L10 Dexterous Hands
-  - Added GUI pressure display for L10 hand
-  - Included partial example source code
+  - 支持LinkerHand L10版本灵巧手
+  - 增加GUI控制L10灵巧手
+  - 增加GUI显示L10灵巧手压感图形模式数据
+  - 增加部分示例源码
   
 
 
 ## [L10_Example](example/L10)
 
-&ensp;&ensp; __Before running, update the [setting.yaml](LinkerHand/config/setting.yaml) configuration to match your actual LinkerHand hardware setup.__
+&ensp;&ensp; __在运行之前, 请将 [setting.yaml](LinkerHand/config/setting.yaml) 的配置信息修改为您实际控制的灵巧手配置信息.__
 
 - #### [0000-gui_control](example/gui_control/gui_control.py)
 - #### [0001-linker_hand_fast](example/L10/gesture/linker_hand_fast.py)
@@ -58,9 +58,9 @@ LinkerHand Python SDK
 - #### Import
   ```python
   from LinkerHand.linker_hand_api import LinkerHandApi
-  # Initialize API for L10 left hand
+  # 初始化API L10 左手
   hand = LinkerHandApi(hand_joint="L10",hand_type="left")
-  # Initialize API for L10 right hand
+  # 初始化API L10 右手
   hand = LinkerHandApi(hand_joint="L10",hand_type="right")
   ```
 
