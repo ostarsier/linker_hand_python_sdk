@@ -83,6 +83,18 @@ LEFT_HAND:
   - 255
   - 255
   - 255
+- ACTION_NAME: shishi
+  POSITION:
+  - 85
+  - 30
+  - 255
+  - 0
+  - 0
+  - 255
+  - 0
+  - 0
+  - 0
+  - 66
 RIGHT_HAND:
 - ACTION_NAME: 张开
   POSITION:

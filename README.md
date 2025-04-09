@@ -1,3 +1,4 @@
+
 # LinkerHand-Python-SDK
 
 ## Overview
@@ -26,6 +27,10 @@ LinkerHand Python SDK
 
 
 ## Version Information
+- > ### 1.3.6
+
+  - Compatible with L7/L20/L25 Dexterous Hand Models 
+  
 - > ### 1.1.2
   - Compatible with L10 Dexterous Hand Models 
   - Supports GUI-Based Control for L10 Dexterous Hands

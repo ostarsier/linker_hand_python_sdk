@@ -1,17 +1,27 @@
+#!/usr/bin/env python3 
+# -*- coding: utf-8 -*-
+'''
+Author: HJX
+Date: 2025-04-01 14:09:21
+LastEditors: Please set LastEditors
+LastEditTime: 2025-04-09 14:12:57
+FilePath: /LinkerHand_Python_SDK/LinkerHand/utils/load_write_yaml.py
+Description: 
+symbol_custom_string_obkorol_copyright: 
+'''
 import yaml, os, sys
-# 获取当前脚本所在目录
-current_dir = os.path.dirname(os.path.abspath(__file__))
-# 找到上上级目录
-target_dir = os.path.abspath(os.path.join(current_dir, "../.."))
-# 添加到 sys.path
-sys.path.append(target_dir)
-
-
 class LoadWriteYaml():
     def __init__(self):
-        self.setting_path = target_dir + "/LinkerHand/config/setting.yaml"
-        self.l10_positions = target_dir + "/LinkerHand/config/L10_positions.yaml"
-        self.l20_positions = target_dir + "/LinkerHand/config/L20_positions.yaml"
+        # 由于是API形式，这里要给配置文件目录绝对路径
+        # ROS模式路径
+        #yaml_path = os.path.dirname(os.path.abspath(__file__)) + "/../../LinkerHand"
+        # Python模式路径 获取当前文件的上层文件夹路径
+        yaml_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        self.setting_path = yaml_path+"/config/setting.yaml"
+        self.l7_positions = yaml_path+"/config/L7_positions.yaml"
+        self.l10_positions = yaml_path+"/config/L10_positions.yaml"
+        self.l20_positions = yaml_path+"/config/L20_positions.yaml"
+        self.l25_positions = yaml_path+"/config/L25_positions.yaml"
         
 
     def load_setting_yaml(self):
@@ -37,11 +47,14 @@ class LoadWriteYaml():
     def load_action_yaml(self,hand_joint="",hand_type=""):
         if hand_joint == "L20":
             action_path = self.l20_positions
+            print("__" * 20)
+            print(action_path)
         elif hand_joint == "L10":
             action_path = self.l10_positions
         elif hand_joint == "L25":
-            #action_path = action_path + "L25_action.yaml"
-            pass
+            action_path = self.l25_positions
+        elif hand_joint == "L7":
+            action_path = self.l7_positions
         try:
             with open(action_path, 'r', encoding='utf-8') as file:
                 yaml_data = yaml.safe_load(file)
@@ -60,9 +73,10 @@ class LoadWriteYaml():
             action_path = self.l20_positions
         elif hand_joint == "L10":
             action_path = self.l10_positions
+        elif hand_joint == "L7":
+            action_path = self.l7_positions
         elif hand_joint == "L25":
-            #action_path = action_path + "L25_action.yaml"
-            pass
+            action_path = self.l25_positions
         try:
             with open(action_path, 'r', encoding='utf-8') as file:
                 yaml_data = yaml.safe_load(file)

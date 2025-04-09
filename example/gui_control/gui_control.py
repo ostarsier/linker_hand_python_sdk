@@ -17,13 +17,28 @@ LinkerHand图形控制
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.add_button_position = [255] * 10 # 记录添加按钮的位置
+        
         self._init_hand_joint()
         self.api = LinkerHandApi(hand_joint=self.hand_joint,hand_type=self.hand_type)
         self._init_gui_view()
-        self._init_normal_force_plot() # 法向压力波形图
-        self._init_approach_inc_plot() # 接近感应波形图
-        self.set_speed(speed=[30,60,60,60,60])
+        if self.hand_joint == "L7":
+            self.add_button_position = [255] * 7
+            self.set_speed = [180,250,250,250,250,250,250]
+        elif self.hand_joint == "L10":
+            self.add_button_position = [255] * 10 # 记录添加按钮的位置
+            self.set_speed(speed=[30,60,60,60,60])
+            self._init_normal_force_plot() # 法向压力波形图
+            self._init_approach_inc_plot() # 接近感应波形图
+        elif self.hand_joint == "L20":
+            self.add_button_position = [255] * 20 # 记录添加按钮的位置
+            self.set_speed(speed=[120,180,180,180,180])
+            self._init_normal_force_plot() # 法向压力波形图
+            self._init_approach_inc_plot() # 接近感应波形图
+        elif self.hand_joint == "L25":
+            self.add_button_position = [255] * 30 # 记录添加按钮的位置
+            self.set_speed(speed=[60,250,250,250,250])
+        
+        
 
     def _init_hand_joint(self):
         self.yaml = LoadWriteYaml() # 初始化配置文件
@@ -54,8 +69,8 @@ class MainWindow(QMainWindow):
         self.init_pos = [255] * 10
         if self.hand_joint == "L25":
             # L25
-            self.init_pos = [255] * 24
-            self.joint_name = ["拇指根部", "食指根部", "中指根部", "无名指根部","预留","拇指侧摆","食指侧摆","中指侧摆","无名指侧摆","预留","拇指横摆","预留","预留","预留","预留","拇指尖部","食指尖部","中指尖部","无名指部","预留","预留","预留","预留","预留"]
+            self.init_pos = [96, 255, 255, 255, 255, 150, 114, 151, 189, 255, 180, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]
+            self.joint_name = ["拇指根部0", "食指根部1", "中指根部2", "无名指根部3","小指根部4","拇指侧摆5","食指侧摆6","中指侧摆","无名指侧摆8","小指侧摆9","拇指横摆10","预留","预留","预留","预留","拇指中部15","食指中部16","中指中部17","无名指中部18","小指中部19","拇指指尖20","食指指尖21","中指指尖22","无名指指尖23","小指指尖24"]
         elif self.hand_joint == "L20":
             self.init_pos = [255,255,255,255,255,255,10,100,180,240,245,255,255,255,255,255,255,255,255,255]
             # L20
@@ -64,6 +79,10 @@ class MainWindow(QMainWindow):
             # L10
             self.init_pos = [255] * 10
             self.joint_name = ["拇指根部", "拇指侧摆","食指根部", "中指根部", "无名指根部","小指根部","食指侧摆","无名指侧摆","小指侧摆","拇指旋转"]
+        elif self.hand_joint == "L7":
+            # L7
+            self.init_pos = [250] * 7
+            self.joint_name = ["大拇指弯曲", "大拇指横摆","食指弯曲", "中指弯曲", "无名指弯曲","小拇指弯曲","拇指旋转"]
         
     
     # 初始化窗口界面

@@ -1,3 +1,4 @@
+
 # LinkerHand-Python-SDK
 
 ## Overview
@@ -26,6 +27,9 @@ LinkerHand Python SDK
 
 
 ## 更新说明
+- > ### 1.3.6
+  - 支持LinkerHand L7/L20/L25版本灵巧手
+
 - > ### 1.1.2
   - 支持LinkerHand L10版本灵巧手
   - 增加GUI控制L10灵巧手
