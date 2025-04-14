@@ -195,9 +195,11 @@ class LinkerHandL10Can:
         self.get_motor_temperature()
         return self.x33+self.x34
 
-    def get_torque(self): 
-        self.send_frame(0x02,[])
-        return self.x02
+    def get_torque(self):
+        '''暂不支持'''
+        # self.send_frame(0x02,[])
+        # return self.x02
+        return [None] * 5
     def get_fault(self):
         '''获取电机故障'''
         self.get_motor_fault_code()
