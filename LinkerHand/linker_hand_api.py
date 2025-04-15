@@ -2,8 +2,8 @@
 Author: HJX
 Date: 2025-04-01 14:09:21
 LastEditors: Please set LastEditors
-LastEditTime: 2025-04-11 09:19:15
-FilePath: /Linker_Hand_SDK_ROS/src/linker_hand_sdk_ros/scripts/LinkerHand/linker_hand_api.py
+LastEditTime: 2025-04-15 14:11:58
+FilePath: /LinkerHand_Python_SDK/LinkerHand/linker_hand_api.py
 Description: 
 symbol_custom_string_obkorol_copyright: 
 '''
@@ -85,14 +85,6 @@ class LinkerHandApi:
     def _get_approach_inc(self):
         '''# 获取接近度'''
         self.hand.get_approach_inc()
-
-    def get_force(self):
-        '''获取所有压感数据'''
-        self._get_approach_inc()
-        self._get_normal_force()
-        self._get_tangential_force()
-        self._get_tangential_force_dir()
-        return self.hand.get_force()
     
     def set_speed(self,speed=[100]*5):
         '''# 设置速度'''
@@ -101,7 +93,7 @@ class LinkerHandApi:
     def set_joint_speed(self,speed=[100]*5):
         '''设置速度by topic'''
         self.hand.set_speed(speed=speed)
-    def set_torque(self, torque=[]):
+    def set_torque(self, torque=[180] * 5):
         '''设置最大扭矩'''
         ColorMsg(msg=f"设置最大扭矩为{torque}", color="green")
         return self.hand.set_torque(torque=torque)
@@ -116,15 +108,19 @@ class LinkerHandApi:
     def get_version(self):
         '''获取版本'''
         return self.hand.get_version()
+    
     def get_current(self):
         '''获取当前电流'''
         return self.hand.get_current()
+    
     def get_state(self):
         '''获取当前关节状态'''
         return self.hand.get_current_status()
+    
     def get_speed(self):
         '''获取速度'''
         return self.hand.get_speed()
+    
     def get_joint_speed(self):
         speed = self.hand.get_speed()
         if self.hand_joint == "L7":
@@ -135,6 +131,15 @@ class LinkerHandApi:
             return [255,speed[1],speed[2],speed[3],speed[4],255,255,255,255,255,speed[0],255,255,255,255,255,255,255,255,255]
         elif self.hand_joint == "L25":
             return speed
+
+    def get_force(self):
+        '''获取法向压力、切向压力、切向压力方向、接近感应数据'''
+        self._get_normal_force()
+        self._get_tangential_force()
+        self._get_tangential_force_dir()
+        self._get_approach_inc()
+        return self.hand.get_force()
+
 
     def get_torque(self):
         '''获取当前最大扭矩'''
@@ -177,4 +182,5 @@ class LinkerHandApi:
 
 
 if __name__ == "__main__":
-    hand = LinkerHandApi()
+    hand = LinkerHandApi(hand_type="right", hand_joint="L10")
+    

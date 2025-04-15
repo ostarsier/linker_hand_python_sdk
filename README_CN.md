@@ -1,3 +1,4 @@
+
 # LinkerHand-Python-SDK
 
 ## Overview
@@ -66,32 +67,8 @@ LinkerHand Python SDK
 
 
 
-- #### Import
-  ```python
-  from LinkerHand.linker_hand_api import LinkerHandApi
-  # 初始化API L10 左手
-  hand = LinkerHandApi(hand_joint="L10",hand_type="left")
-  # 初始化API L10 右手
-  hand = LinkerHandApi(hand_joint="L10",hand_type="right")
-  ```
-
-
-- #### Move
-  ```python
-  hand.finger_move(...)
-  ```
-
-- #### Set
-  ```python
-  hand.set_speed(...)
-  ```
-
-- #### Get
-  ```python
-  hand.get_force()
-  hand.get_speed()
-  hand.get_state()
-  ```
+## API 说明文档
+[Linker Hand API for Python Document](linker_hand/doc/API-Reference.md)
 
 
 

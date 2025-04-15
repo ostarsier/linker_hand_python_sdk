@@ -61,7 +61,7 @@ class LinkerHandL10Can:
             self.bus.send(msg)
         except can.CanError as e:
             print(f"Failed to send message: {e}")
-        time.sleep(0.002)
+        time.sleep(0.005)
 
     def set_joint_positions(self, joint_angles):
         """将10个关节的位置设置（joint_angles: 10个数值的列表）。"""

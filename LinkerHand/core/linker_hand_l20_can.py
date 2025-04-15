@@ -240,8 +240,8 @@ class LinkerHandL20Can:
         self.send_command(0x03,[])
         self.send_command(0x04,[])
         return self.x01 + self.x02 + self.x03 + self.x04
-    def get_force(self):
-        return [self.normal_force,self.tangential_force , self.tangential_force_dir , self.approach_inc]
+    #def get_force(self):
+        #return [self.normal_force,self.tangential_force , self.tangential_force_dir , self.approach_inc]
     def get_speed(self):
         '''获取当前电机速度'''
         self.send_command(0x05, [0])
