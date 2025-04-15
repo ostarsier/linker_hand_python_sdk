@@ -1,4 +1,3 @@
-
 # LinkerHand-Python-SDK
 
 ## Overview
@@ -68,7 +67,7 @@ LinkerHand Python SDK
 
 
 ## API 说明文档
-[Linker Hand API for Python Document](linker_hand/doc/API-Reference.md)
+[Linker Hand API for Python Document](doc/API-Reference.md)
 
 
 
