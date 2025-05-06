@@ -19,6 +19,7 @@ class LoadWriteYaml():
         self.l7_positions = yaml_path+"/config/L7_positions.yaml"
         self.l10_positions = yaml_path+"/config/L10_positions.yaml"
         self.l20_positions = yaml_path+"/config/L20_positions.yaml"
+        self.l21_positions = yaml_path+"/config/L21_positions.yaml"
         self.l25_positions = yaml_path+"/config/L25_positions.yaml"
         
 
@@ -29,10 +30,12 @@ class LoadWriteYaml():
                 self.sdk_version = setting["VERSION"]
                 self.left_hand_exists = setting['LINKER_HAND']['LEFT_HAND']['EXISTS']
                 self.left_hand_names = setting['LINKER_HAND']['LEFT_HAND']['NAME']
+                self.left_hand_modbus = setting['LINKER_HAND']['LEFT_HAND']['MODBUS']
                 self.left_hand_joint = setting['LINKER_HAND']['LEFT_HAND']['JOINT']
                 self.left_hand_force = setting['LINKER_HAND']['LEFT_HAND']['TOUCH']
                 self.right_hand_exists = setting['LINKER_HAND']['RIGHT_HAND']['EXISTS']
                 self.right_hand_names = setting['LINKER_HAND']['RIGHT_HAND']['NAME']
+                self.right_hand_modbus = setting['LINKER_HAND']['RIGHT_HAND']['MODBUS']
                 self.right_hand_joint = setting['LINKER_HAND']['RIGHT_HAND']['JOINT']
                 self.right_hand_force = setting['LINKER_HAND']['RIGHT_HAND']['TOUCH']
                 self.password = setting['PASSWORD']
@@ -49,6 +52,8 @@ class LoadWriteYaml():
             action_path = self.l10_positions
         elif hand_joint == "L25":
             action_path = self.l25_positions
+        elif hand_joint == "L21":
+            action_path = self.l21_positions
         elif hand_joint == "L7":
             action_path = self.l7_positions
             print(action_path)
@@ -72,6 +77,8 @@ class LoadWriteYaml():
             action_path = self.l10_positions
         elif hand_joint == "L7":
             action_path = self.l7_positions
+        elif hand_joint == "L21":
+            action_path = self.l21_positions
         elif hand_joint == "L25":
             action_path = self.l25_positions
         try:

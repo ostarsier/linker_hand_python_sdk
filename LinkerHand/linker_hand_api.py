@@ -1,12 +1,3 @@
-'''
-Author: HJX
-Date: 2025-04-01 14:09:21
-LastEditors: Please set LastEditors
-LastEditTime: 2025-04-15 14:11:58
-FilePath: /LinkerHand_Python_SDK/LinkerHand/linker_hand_api.py
-Description: 
-symbol_custom_string_obkorol_copyright: 
-'''
 #!/usr/bin/env python3 
 # -*- coding: utf-8 -*-
 import sys,os,time
@@ -25,19 +16,29 @@ class LinkerHandApi:
         self.hand_type = hand_type
         if self.hand_type == "left":
             self.hand_id = 0x28 # 左手
-        else:
+        if self.hand_type == "right":
             self.hand_id = 0x27 # 右手
         if self.hand_joint == "L7":
-            from core.linker_hand_l7_can import LinkerHandL7Can
+            from core.can.linker_hand_l7_can import LinkerHandL7Can
             self.hand = LinkerHandL7Can(can_id=self.hand_id)
         if self.hand_joint == "L10":
-            from core.linker_hand_l10_can import LinkerHandL10Can
-            self.hand = LinkerHandL10Can(can_id=self.hand_id)
+            if self.config['LINKER_HAND']['LEFT_HAND']['MODBUS'] == "RML": # 睿尔曼API2 485协议
+                from Robotic_Arm.rm_robot_interface import RoboticArm, rm_thread_mode_e
+                from core.rml485.linker_hand_l10_485 import LinkerHandL10For485
+                robot = RoboticArm(rm_thread_mode_e.RM_TRIPLE_MODE_E)
+                arm = robot.rm_create_robot_arm("192.168.1.18", 8080)
+                self.hand = LinkerHandL10For485(arm=arm,modbus_port=1,modbus_baudrate=115200,modbus_timeout=5)
+            else : # 默认CAN协议
+                from core.can.linker_hand_l10_can import LinkerHandL10Can
+                self.hand = LinkerHandL10Can(can_id=self.hand_id)
         if self.hand_joint == "L20":
-            from core.linker_hand_l20_can import LinkerHandL20Can
+            from core.can.linker_hand_l20_can import LinkerHandL20Can
             self.hand = LinkerHandL20Can(can_id=self.hand_id)
+        if self.hand_joint == "L21":
+            from core.can.linker_hand_l21_can import LinkerHandL21Can
+            self.hand = LinkerHandL21Can(can_id=self.hand_id)
         if self.hand_joint == "L25":
-            from core.linker_hand_l25_can import LinkerHandL25Can
+            from core.can.linker_hand_l25_can import LinkerHandL25Can
             self.hand = LinkerHandL25Can(can_id=self.hand_id)
         # 打开can0
         if sys.platform == "linux":
@@ -62,6 +63,8 @@ class LinkerHandApi:
         elif self.hand_joint == "L10" and len(pose) == 10:
             self.hand.set_joint_positions(pose)
         elif self.hand_joint == "L20" and len(pose) == 20:
+            self.hand.set_joint_positions(pose)
+        elif self.hand_joint == "L21" and len(pose) == 25:
             self.hand.set_joint_positions(pose)
         elif self.hand_joint == "L25" and len(pose) == 25:
             self.hand.set_joint_positions(pose)
@@ -88,14 +91,14 @@ class LinkerHandApi:
     
     def set_speed(self,speed=[100]*5):
         '''# 设置速度'''
-        ColorMsg(msg=f"设置速度为{speed}", color="green")
+        ColorMsg(msg=f"{self.hand_type} {self.hand_joint}设置速度为{speed}", color="green")
         self.hand.set_speed(speed=speed)
     def set_joint_speed(self,speed=[100]*5):
         '''设置速度by topic'''
         self.hand.set_speed(speed=speed)
     def set_torque(self, torque=[180] * 5):
         '''设置最大扭矩'''
-        ColorMsg(msg=f"设置最大扭矩为{torque}", color="green")
+        ColorMsg(msg=f"{self.hand_type} {self.hand_joint}设置最大扭矩为{torque}", color="green")
         return self.hand.set_torque(torque=torque)
     
     def set_current(self, current=[]):
@@ -129,9 +132,16 @@ class LinkerHandApi:
             return [speed[0],255,speed[1],speed[2],speed[3],speed[4],255,255,255,255]
         elif self.hand_joint == "L20":
             return [255,speed[1],speed[2],speed[3],speed[4],255,255,255,255,255,speed[0],255,255,255,255,255,255,255,255,255]
+        elif self.hand_joint == "L21":
+            return speed
         elif self.hand_joint == "L25":
             return speed
 
+
+    def get_touch_type(self):
+        '''获取触摸类型'''
+        return self.hand.get_touch_type()
+    
     def get_force(self):
         '''获取法向压力、切向压力、切向压力方向、接近感应数据'''
         self._get_normal_force()
@@ -140,6 +150,9 @@ class LinkerHandApi:
         self._get_approach_inc()
         return self.hand.get_force()
 
+    def get_touch(self):
+        '''获取触摸数据'''
+        return self.hand.get_touch()
 
     def get_torque(self):
         '''获取当前最大扭矩'''
@@ -175,7 +188,12 @@ class LinkerHandApi:
             pass
 
     
-
+    def get_finger_order(self):
+        '''获取手指电机排序'''
+        if self.hand_joint == "L21" or self.hand_joint == "L25":
+            return self.hand.get_finger_order()
+        else:
+            return []                             
         
     
 

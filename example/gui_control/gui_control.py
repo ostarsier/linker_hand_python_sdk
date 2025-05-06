@@ -20,20 +20,46 @@ class MainWindow(QMainWindow):
         
         self._init_hand_joint()
         self.api = LinkerHandApi(hand_joint=self.hand_joint,hand_type=self.hand_type)
+        self.touch_type = -1
         self._init_gui_view()
         if self.hand_joint == "L7":
             self.add_button_position = [255] * 7
             self.set_speed = [180,250,250,250,250,250,250]
+            self.touch_type = self.api.get_touch_type()
+            if self.touch_type == 2:
+                self._init_normal_force_plot(num_lines=6) # 法向压力波形图
+            else:
+                self._init_normal_force_plot() # 法向压力波形图
+                self._init_approach_inc_plot() # 接近感应波形图
         elif self.hand_joint == "L10":
             self.add_button_position = [255] * 10 # 记录添加按钮的位置
             self.set_speed(speed=[30,60,60,60,60])
-            self._init_normal_force_plot() # 法向压力波形图
-            self._init_approach_inc_plot() # 接近感应波形图
+            self.touch_type = self.api.get_touch_type()
+            if self.touch_type == 2:
+                self._init_normal_force_plot(num_lines=6) # 法向压力波形图
+            else:
+                self._init_normal_force_plot() # 法向压力波形图
+                self._init_approach_inc_plot() # 接近感应波形图
         elif self.hand_joint == "L20":
             self.add_button_position = [255] * 20 # 记录添加按钮的位置
             self.set_speed(speed=[120,180,180,180,180])
             self._init_normal_force_plot() # 法向压力波形图
-            self._init_approach_inc_plot() # 接近感应波形图
+            self.touch_type = self.api.get_touch_type()
+            if self.touch_type == 2:
+                self._init_normal_force_plot(num_lines=6) # 法向压力波形图
+            else:
+                self._init_normal_force_plot() # 法向压力波形图
+                self._init_approach_inc_plot() # 接近感应波形图
+        elif self.hand_joint == "L21":
+            self.add_button_position = [255] * 25
+            self.set_speed(speed=[60,220,220,220,220])
+            self._init_normal_force_plot() # 法向压力波形图
+            self.touch_type = self.api.get_touch_type()
+            if self.touch_type == 2:
+                self._init_normal_force_plot(num_lines=6) # 法向压力波形图
+            else:
+                self._init_normal_force_plot() # 法向压力波形图
+                self._init_approach_inc_plot() # 接近感应波形图
         elif self.hand_joint == "L25":
             self.add_button_position = [255] * 30 # 记录添加按钮的位置
             self.set_speed(speed=[60,250,250,250,250])
@@ -70,7 +96,11 @@ class MainWindow(QMainWindow):
         if self.hand_joint == "L25":
             # L25
             self.init_pos = [96, 255, 255, 255, 255, 150, 114, 151, 189, 255, 180, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]
-            self.joint_name = ["拇指根部0", "食指根部1", "中指根部2", "无名指根部3","小指根部4","拇指侧摆5","食指侧摆6","中指侧摆","无名指侧摆8","小指侧摆9","拇指横摆10","预留","预留","预留","预留","拇指中部15","食指中部16","中指中部17","无名指中部18","小指中部19","拇指指尖20","食指指尖21","中指指尖22","无名指指尖23","小指指尖24"]
+            self.joint_name = ["拇指根部", "食指根部", "中指根部", "无名指根部","小指根部","拇指侧摆","食指侧摆","中指侧摆","无名指侧摆","小指侧摆","拇指横摆","预留","预留","预留","预留","拇指中部","食指中部","中指中部","无名指中部","小指中部","拇指指尖","食指指尖","中指指尖","无名指指尖","小指指尖"]
+        elif self.hand_joint == "L21":
+            # L21
+            self.init_pos = [96, 255, 255, 255, 255, 150, 114, 151, 189, 255, 180, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255]
+            self.joint_name = ["拇指根部", "食指根部", "中指根部", "无名指根部","小指根部","拇指侧摆","食指侧摆","中指侧摆","无名指侧摆","小指侧摆","拇指横摆","预留","预留","预留","预留","拇指中部","预留","预留","预留","预留","拇指指尖","食指指尖","中指指尖","无名指指尖","小指指尖"]
         elif self.hand_joint == "L20":
             self.init_pos = [255,255,255,255,255,255,10,100,180,240,245,255,255,255,255,255,255,255,255,255]
             # L20
@@ -114,9 +144,9 @@ class MainWindow(QMainWindow):
         splitter.setSizes([600, 450])
         self.setCentralWidget(splitter)
     # 初始化波形图
-    def _init_normal_force_plot(self):
+    def _init_normal_force_plot(self,num_lines=5):
         # 初始化波形图
-        self.normal_force_plot = WaveformPlot(num_lines=5, labels=None,title="法向压力波形图")
+        self.normal_force_plot = WaveformPlot(num_lines=num_lines, labels=None,title="法向压力波形图")
         # 设置波形图位置
         self.normal_force_plot.setGeometry(700, 100, 800, 400)
         self.normal_force_plot.show()
@@ -167,13 +197,26 @@ class MainWindow(QMainWindow):
     # 更新法向压力波形图
     def update_normal_force_plot(self):
         import random
-        values = self.api.get_force()
-        self.normal_force_plot.update_data(values[0])
+        #touch_type = self.api.get_touch_type()
+        if self.touch_type == 2:
+            values = self.api.get_touch()
+        else:
+            f = self.api.get_force()
+            values = f[0]
+        if values == None:
+            pass
+        else:
+            self.normal_force_plot.update_data(values)
     # 更新接近感应波形图
     def update_approach_inc_plot(self):
         import random
-        values = self.api.get_force()
-        self.approach_inc_plot.update_data(values[3])
+        #touch_type = self.api.get_touch_type()
+        if self.touch_type == 2:
+            values = [0] * 5
+        else:
+            f = self.api.get_force()
+            values = f[3]
+        self.approach_inc_plot.update_data(values)
 
     def set_speed(self,speed=[180,250,250,250,250]):
         ColorMsg(msg=f"设置速度:{speed}", color="green")

@@ -23,6 +23,11 @@ LinkerHand Python SDK
   pip3 install -r requirements.txt
   ```
 
+# CAN or RML485 协议切换
+编辑config/setting.yaml配置文件，按照配置文件内注释说明进行参数修改。RML(睿尔曼API2) 通过睿尔曼机械臂进行485协议通讯控制LinkerHand
+MODBUS: "None" or "RML"
+
+
 ## 相关文档
 [Linker Hand API for Python Document](doc/API-Reference.md)
 

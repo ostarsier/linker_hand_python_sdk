@@ -14,18 +14,20 @@ from LinkerHand.utils.color_msg import ColorMsg
 class GetSpeed:
     def __init__(self):
         # 验证当前LinkerHand配置
-        hand = InitLinkerHand()
+        init_hand = InitLinkerHand()
         # 获取当前LinkerHand信息
-        self.hand_joint, self.hand_type = hand.current_hand()
-        if self.hand_joint != False and self.hand_type != False:
+        left_hand ,left_hand_joint ,left_hand_type ,left_hand_force,left_hand_pose, left_hand_torque, left_hand_speed ,right_hand ,right_hand_joint ,right_hand_type ,right_hand_force,right_hand_pose, right_hand_torque, right_hand_speed,setting = init_hand.current_hand()
+        if left_hand_joint != False and left_hand_type != False:
             # 初始化API
-            self.api = LinkerHandApi(hand_joint=self.hand_joint,hand_type=self.hand_type)
-            self.api.set_speed(speed=180)
+            self.hand = LinkerHandApi(hand_joint=left_hand_joint,hand_type=left_hand_type)
+        if right_hand_joint != False and right_hand_type != False:
+            # 初始化API
+            self.hand = LinkerHandApi(hand_joint=right_hand_joint,hand_type=right_hand_type)
         self.get_speed()
     
     def get_speed(self):
         while True:
-            speed = self.api.get_speed()
+            speed = self.hand.get_speed()
             print(f"Current speed: {speed}")
             time.sleep(0.01)
 
