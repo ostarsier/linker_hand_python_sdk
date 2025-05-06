@@ -32,6 +32,11 @@ MODBUS: "None" or "RML"
 [Linker Hand API for Python Document](doc/API-Reference.md)
 
 ## 更新说明
+- > ### 2.1.3
+  - 1、支持L10使用睿尔曼RML API2的485协议
+  - 2、支持L10 Mujoco仿真
+
+
 - > ### 1.3.6
   - 支持LinkerHand L7/L20/L25版本灵巧手
 
