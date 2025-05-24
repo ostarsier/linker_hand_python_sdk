@@ -3,7 +3,6 @@ import time, sys
 import threading
 import numpy as np
 from enum import Enum
-from sensor_msgs.msg import JointState
 
 
 class LinkerHandL7Can:
