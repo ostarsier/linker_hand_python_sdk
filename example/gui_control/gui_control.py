@@ -26,20 +26,20 @@ class MainWindow(QMainWindow):
             self.add_button_position = [255] * 7
             self.set_speed = [180,250,250,250,250,250,250]
             self.touch_type = self.api.get_touch_type()
-            if self.touch_type == 2:
-                self._init_normal_force_plot(num_lines=6) # 法向压力波形图
-            else:
-                self._init_normal_force_plot() # 法向压力波形图
-                self._init_approach_inc_plot() # 接近感应波形图
+            # if self.touch_type == 2:
+            #     self._init_normal_force_plot(num_lines=6) # 法向压力波形图
+            # else:
+            #     self._init_normal_force_plot() # 法向压力波形图
+            #     self._init_approach_inc_plot() # 接近感应波形图
         elif self.hand_joint == "L10":
             self.add_button_position = [255] * 10 # 记录添加按钮的位置
-            self.set_speed(speed=[30,60,60,60,60])
+            self.set_speed(speed=[180,250,250,250,250])
             self.touch_type = self.api.get_touch_type()
-            if self.touch_type == 2:
-                self._init_normal_force_plot(num_lines=6) # 法向压力波形图
-            else:
-                self._init_normal_force_plot() # 法向压力波形图
-                self._init_approach_inc_plot() # 接近感应波形图
+            # if self.touch_type == 2:
+            #     self._init_normal_force_plot(num_lines=6) # 法向压力波形图
+            # else:
+            #     self._init_normal_force_plot() # 法向压力波形图
+            #     self._init_approach_inc_plot() # 接近感应波形图
         elif self.hand_joint == "L20":
             self.add_button_position = [255] * 20 # 记录添加按钮的位置
             self.set_speed(speed=[120,180,180,180,180])
@@ -145,6 +145,7 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(splitter)
     # 初始化波形图
     def _init_normal_force_plot(self,num_lines=5):
+        return
         # 初始化波形图
         self.normal_force_plot = WaveformPlot(num_lines=num_lines, labels=None,title="法向压力波形图")
         # 设置波形图位置
@@ -154,6 +155,7 @@ class MainWindow(QMainWindow):
         self.timer.timeout.connect(self.update_normal_force_plot)
         self.timer.start(50)
     def _init_approach_inc_plot(self):
+        return
         # 初始化波形图
         self.approach_inc_plot = WaveformPlot(num_lines=5, labels=None,title="接近感应波形图")
         # 设置波形图位置

@@ -64,7 +64,7 @@ MODBUS: "None" or "RML"
 
 &ensp;&ensp; __在运行之前, 请将 [setting.yaml](LinkerHand/config/setting.yaml) 的配置信息修改为您实际控制的灵巧手配置信息.__
 
-- #### [0000-gui_control](example/gui_control/gui_control.py)
+- #### [0000-gui_control](example/gui_control/gui_control.py) 
 - #### [0001-linker_hand_fast](example/L10/gesture/linker_hand_fast.py)
 - #### [0002-linker_hand_finger_bend](example/L10/gesture/linker_hand_finger_bend.py)
 - #### [0003-linker_hand_fist](example/L10/gesture/linker_hand_fist.py)
@@ -72,9 +72,9 @@ MODBUS: "None" or "RML"
 - #### [0005-linker_hand_opposition](example/L10/gesture/linker_hand_opposition.py)
 - #### [0006-linker_hand_sway](example/L10/gesture/linker_hand_sway.py)
 
-- #### [0007-linker_hand_get_force](example/L10/get_status/get_force.py)
-- #### [0008-linker_hand_get_speed](example/L10/get_status/get_speed.py)
-- #### [0009-linker_hand_get_state](example/L10/get_status/get_state.py)
+- #### [0007-linker_hand_get_force](example/L10/get_status/get_force.py) #python3 get_force.py --hand_joint L10 --hand_type right
+- #### [0008-linker_hand_get_speed](example/L10/get_status/get_set_speed.py) #python3 get_set_speed.py --hand_joint L10 --hand_type right --speed 100 123 211 121 222   注:L7 speed参数为7个，其他为5个
+- #### [0009-linker_hand_get_state](example/L10/get_status/get_set_state.py) # python3 get_set_state.py --hand_joint L10 --hand_type right --position 100 123 211 121 222 255 255 255 255 255  position参数个数请参照position与手指关节对照表
 
 - #### [0010-linker_hand_dynamic_grasping](example/L10/grab/dynamic_grasping.py)
 
