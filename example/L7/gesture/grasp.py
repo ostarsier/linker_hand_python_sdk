@@ -14,17 +14,21 @@ import numpy as np
 
 def main():
     linkerhand = InitLinkerHand()
-    all_hand_values = linkerhand.current_hand()
-    right_hand_joint = all_hand_values[8]
-    right_hand_type = all_hand_values[9]
+    left_hand, left_hand_joint, left_hand_type, left_hand_force, left_hand_pose, left_hand_torque, left_hand_speed, \
+    right_hand, right_hand_joint, right_hand_type, right_hand_force, right_hand_pose, right_hand_torque, right_hand_speed, setting = linkerhand.current_hand()
 
-
-    if not (right_hand_joint and right_hand_type):
-        ColorMsg(msg="未检测到右手或右手配置不正确，程序退出。(Right hand not configured or detected. Exiting.)", color="red")
+    hand = None
+    if right_hand_joint and right_hand_type:
+        # 初始化API
+        hand = LinkerHandApi(hand_joint=right_hand_joint, hand_type=right_hand_type)
+        ColorMsg(msg=f"使用右手: {right_hand_joint} {right_hand_type}", color="blue")
+    elif left_hand_joint and left_hand_type:
+        # 如果右手未连接，尝试使用左手
+        hand = LinkerHandApi(hand_joint=left_hand_joint, hand_type=left_hand_type)
+        ColorMsg(msg=f"使用左手: {left_hand_joint} {left_hand_type}", color="blue")
+    else:
+        ColorMsg(msg="错误：未检测到连接的 LinkerHand 设备。", color="red")
         return
-    
-    # 仅当右手有效时初始化API
-    hand = LinkerHandApi(hand_joint=right_hand_joint, hand_type=right_hand_type)
 
     # 设置速度 (Set speed)
     # 7个关节的速度: [拇指屈伸, 拇指侧摆, 食指, 中指, 无名指, 小指, 拇指旋转]
@@ -38,7 +42,7 @@ def main():
     initial_open_pose = [255, 255, 255, 255, 255, 255, 255]
     # 抓握话筒的目标姿态 (示例值, 可能需要根据实际话筒和期望的握持方式进行调整)
     # 例如: 手指闭合, 拇指对立姿态
-    target_grasp_pose = [120, 120, 110, 110, 110, 110, 120] 
+    target_grasp_pose = [120, 120, 110, 110, 110, 110, 120]   
     
     current_pose = list(initial_open_pose) # 程序开始时，手爪完全张开
 
