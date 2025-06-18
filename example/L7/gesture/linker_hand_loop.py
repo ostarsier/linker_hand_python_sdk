@@ -15,12 +15,16 @@ def main():
     linkerhand = InitLinkerHand()
     # 获取当前LinkerHand信息
     left_hand ,left_hand_joint ,left_hand_type ,left_hand_force,left_hand_pose, left_hand_torque, left_hand_speed ,right_hand ,right_hand_joint ,right_hand_type ,right_hand_force,right_hand_pose, right_hand_torque, right_hand_speed,setting = linkerhand.current_hand()
-    if left_hand_joint != False and left_hand_type != False:
-        # 初始化API
-        hand = LinkerHandApi(hand_joint=left_hand_joint,hand_type=left_hand_type)
-    if right_hand_joint != False and right_hand_type != False:
+    if right_hand_joint and right_hand_type:
         # 初始化API
         hand = LinkerHandApi(hand_joint=right_hand_joint,hand_type=right_hand_type)
+    elif left_hand_joint and left_hand_type:
+        # 如果右手未连接，尝试使用左手
+        hand = LinkerHandApi(hand_joint=left_hand_joint, hand_type=left_hand_type)
+        ColorMsg(msg=f"使用左手: {left_hand_joint} {left_hand_type}", color="blue")
+    else:
+        ColorMsg(msg="错误：未检测到连接的 LinkerHand 设备。", color="red")
+        return
     # 设置速度
     speed = [120,250,250,250,250,250,250]
     hand.set_speed(speed=speed)

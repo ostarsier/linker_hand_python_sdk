@@ -18,6 +18,13 @@ def main():
     if right_hand_joint and right_hand_type:
         # 初始化API
         hand = LinkerHandApi(hand_joint=right_hand_joint,hand_type=right_hand_type)
+    elif left_hand_joint and left_hand_type:
+        # 如果右手未连接，尝试使用左手
+        hand = LinkerHandApi(hand_joint=left_hand_joint, hand_type=left_hand_type)
+        ColorMsg(msg=f"使用左手: {left_hand_joint} {left_hand_type}", color="blue")
+    else:
+        ColorMsg(msg="错误：未检测到连接的 LinkerHand 设备。", color="red")
+        return
     # 设置速度
     speed = [120,120,120,120,120,120,120]
     hand.set_speed(speed=speed)

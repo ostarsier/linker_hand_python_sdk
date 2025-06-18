@@ -10,4 +10,4 @@ ip -details link show can0
 # 查看can0数据
 candump can0
 
-# crasp.py
+# python example/L7/gesture/crasp.py
