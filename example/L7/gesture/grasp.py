@@ -39,7 +39,7 @@ def main():
     # 手指姿态数据 (Finger pose data)
     # [拇指屈伸, 拇指侧摆, 食指, 中指, 无名指, 小指, 拇指旋转]
     # 范围 0-255, 255为完全张开，0为完全握拳 (Range 0-255, 255 is fully open, 0 is fully clenched)
-    initial_open_pose = [255, 255, 255, 255, 255, 255, 255]
+    initial_open_pose = [120, 120, 255, 255, 255, 255, 120]
     # 抓握话筒的目标姿态 (示例值, 可能需要根据实际话筒和期望的握持方式进行调整)
     # 例如: 手指闭合, 拇指对立姿态
     target_grasp_pose = [120, 120, 110, 110, 110, 110, 120]   
@@ -91,7 +91,7 @@ def main():
                 ColorMsg(msg="检测到话筒! 开始抓握。", color="yellow")
                 microphone_detected = True
             
-            time.sleep(0.5) # 每0.5秒检测一次话筒
+            time.sleep(0.1) # 每0.5秒检测一次话筒
 
         else: # 检测到话筒，但抓握未完成
             ColorMsg(msg=f"正在抓握... 当前姿态: {current_pose}", color="cyan")
@@ -128,7 +128,7 @@ def main():
             else:
                 ColorMsg(msg="姿态已达到目标。", color="green")
                 grasp_complete = True
-
+            time.sleep(0.1)
 
 if __name__ == "__main__":
     main()
